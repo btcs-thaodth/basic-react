@@ -1,5 +1,13 @@
 {
   "homepage": {
     "title": "Welcome to website"
+  },
+  "error": {
+    "default": "Something went wrong",
+    "fetchDataError": "Failed to fetch data, please try again later",
+    "1001": "Sample error"
+  },
+  "validationError": {
+    "2003": "Title is required"
   }
 }

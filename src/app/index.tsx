@@ -1,27 +1,29 @@
-/**
- *
- * App
- *
- * This component is the skeleton around the actual pages, and should only
- * contain code that should be seen on all pages. (e.g. navigation bar)
- */
-
+import 'dayjs/locale/ja'
 import '../styles/global.css'
 import '../styles/antd.css'
 
-import * as React from 'react'
-import { BrowserRouter, Route, Routes } from 'react-router-dom'
+import { ConfigProvider } from 'antd'
+import enUS from 'antd/locale/en_US'
+import jaJP from 'antd/locale/ja_JP'
+import dayjs from 'dayjs'
+import { useEffect } from 'react'
+import { useTranslation } from 'react-i18next'
 
-import { NotFoundPage } from './components/NotFoundPage/Loadable'
-import HomePage from './pages/HomePage'
+import Notification from './components/Notification'
+import Routes from './components/Routes'
 
 export default function App() {
+  const { i18n } = useTranslation()
+  const locale = i18n.language.slice(0, 2)
+
+  useEffect(() => {
+    dayjs.locale(locale)
+  }, [locale])
+
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<HomePage />} />
-        <Route path="*" element={<NotFoundPage />} />
-      </Routes>
-    </BrowserRouter>
+    <ConfigProvider locale={locale === 'ja' ? jaJP : enUS}>
+      <Notification />
+      <Routes />
+    </ConfigProvider>
   )
 }
