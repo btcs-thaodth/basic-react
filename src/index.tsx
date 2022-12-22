@@ -1,16 +1,24 @@
+ import 'react-app-polyfill/ie11';
+ import 'react-app-polyfill/stable';
+
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import './index.css';
-import App from './App';
+import { App } from './app';
+import { RecoilRoot } from 'recoil';
 import reportWebVitals from './reportWebVitals';
+
+ // Initialize languages
+ import './locales/i18n';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
 root.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>
+  <RecoilRoot>
+    <React.StrictMode>
+      <App />
+    </React.StrictMode>
+  </RecoilRoot>
 );
 
 // If you want to start measuring performance in your app, pass a function
