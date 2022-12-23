@@ -1,31 +1,32 @@
-import React, { lazy, Suspense } from 'react';
+import React, { lazy, Suspense } from 'react'
 
 interface Opts {
-  fallback: React.ReactNode;
+  fallback: React.ReactNode
 }
-type Unpromisify<T> = T extends Promise<infer P> ? P : never;
+type Unpromisify<T> = T extends Promise<infer P> ? P : never
 
 export const lazyLoad = <
   T extends Promise<any>,
-  U extends React.ComponentType<any>,
+  U extends React.ComponentType<any>
 >(
-    importFunc: () => T,
-    selectorFunc?: (s: Unpromisify<T>) => U,
-    opts: Opts = { fallback: null },
-  ) => {
-  let lazyFactory: () => Promise<{ default: U }> = importFunc;
+  importFunc: () => T,
+  selectorFunc?: (s: Unpromisify<T>) => U,
+  opts: Opts = { fallback: null }
+) => {
+  let lazyFactory: () => Promise<{ default: U }> = importFunc
 
   if (selectorFunc) {
-    lazyFactory = () => importFunc().then((module) => ({ default: selectorFunc(module) }));
+    lazyFactory = () =>
+      importFunc().then((module) => ({ default: selectorFunc(module) }))
   }
 
-  const LazyComponent = lazy(lazyFactory);
+  const LazyComponent = lazy(lazyFactory)
 
-  return function (props: React.ComponentProps<U>): JSX.Element {
+  return function Loadable(props: React.ComponentProps<U>): JSX.Element {
     return (
       <Suspense fallback={opts.fallback!}>
         <LazyComponent {...props} />
       </Suspense>
-    );
-  };
-};
+    )
+  }
+}
