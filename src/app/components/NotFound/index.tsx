@@ -1,4 +1,4 @@
-export default function NotFoundPage() {
+export default function NotFound() {
   return (
     <div className="h-screen min-h-min flex flex-col items-center justify-center">
       <div className="-mt-24 font-bold text-black text-6xl">

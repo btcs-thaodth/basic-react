@@ -2,6 +2,9 @@
   "homepage": {
     "title": "Welcome to website"
   },
+  "login": {
+    "title": "Login"
+  },
   "error": {
     "default": "Something went wrong",
     "fetchDataError": "Failed to fetch data, please try again later",

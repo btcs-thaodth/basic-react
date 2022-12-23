@@ -1,16 +1,10 @@
 import { RouteObject, useRoutes } from 'react-router-dom'
+import { HomePage } from 'src/app/pages/homepage'
 
 import Login from '../../pages/login'
 import ProtectedLayout from '../Layouts/ProtectedLayout'
 import RedirectHomeLayout from '../Layouts/RedirectHomeLayout'
 import NotFound from '../NotFound'
-
-function Task() {
-  return <div>Task</div>
-}
-function Test() {
-  return <div>Test</div>
-}
 
 export const routesConfig: RouteObject[] = [
   {
@@ -18,10 +12,10 @@ export const routesConfig: RouteObject[] = [
     element: <ProtectedLayout />,
     children: [
       {
-        path: 'test',
-        element: <Test />,
+        index: true,
+        element: <HomePage />,
       },
-      { path: 'task', element: <Task /> },
+     
     ],
   },
   {
