@@ -1,7 +1,8 @@
 import { isAxiosError } from 'axios'
 import { useEffect, useRef, useState } from 'react'
-import { useSetRecoilState } from 'recoil'
 import { useTranslation } from 'react-i18next'
+import { useSetRecoilState } from 'recoil'
+
 import {
   API_ERROR_CODES,
   FORM_VALIDATION_ERROR_CODES,
@@ -45,15 +46,18 @@ function useMutation(params?: UseMutationParams) {
         const response = await api[method]<Data>(url, data)
         isSubmitting.current = false
         setIsLoading(false)
-        form && form.resetFields()
-        onSuccess && onSuccess(response)
+        if (form) {
+          form.resetFields()
+        }
+        if (onSuccess) {
+          onSuccess(response)
+        }
         setToastMessage({ success: successMessage })
       }
     } catch (error) {
       isSubmitting.current = false
       setIsLoading(false)
       if (!isAxiosError<ApiError>(error)) {
-        console.log('Unexpected error: ', error)
         setToastMessage({ error: 'error.default' })
         return
       }
@@ -76,9 +80,10 @@ function useMutation(params?: UseMutationParams) {
       }
 
       if (errorCode && API_ERROR_CODES[errorCode as ErrorCode]) {
-        return setToastMessage({
+        setToastMessage({
           error: API_ERROR_CODES[errorCode as ErrorCode],
         })
+        return
       }
 
       setToastMessage({ error: errorMessage })

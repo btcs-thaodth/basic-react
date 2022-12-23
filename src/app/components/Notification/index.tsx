@@ -1,7 +1,8 @@
-import { useEffect } from 'react'
-import { useRecoilState } from 'recoil'
 import { notification } from 'antd'
+import { useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
+import { useRecoilState } from 'recoil'
+
 import { notificationState } from '../../../store/notification'
 import { NotificationType } from '../../../types/store'
 

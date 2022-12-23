@@ -1,6 +1,8 @@
 import {
   Calendar,
   DatePicker,
+  Form,
+  Input,
   Pagination,
   Radio,
   Select,
@@ -10,6 +12,8 @@ import {
 } from 'antd'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
+
+import useMutation from '../../../hooks/useMutation'
 
 const { Option } = Select
 const { RangePicker } = DatePicker
@@ -33,7 +37,10 @@ const columns = [
 
 export default function Test() {
   const [locale, setLocal] = useState('en')
-  const { i18n } = useTranslation()
+  const { t, i18n } = useTranslation()
+  const [form] = Form.useForm()
+
+  useMutation({ form })
 
   const changeLocale = (e: any) => {
     const localeValue = e.target.value
@@ -44,13 +51,28 @@ export default function Test() {
   return (
     <div>
       <Radio.Group value={locale} onChange={changeLocale}>
-        <Radio.Button key="en" value={'en'}>
+        <Radio.Button key="en" value="en">
           English
         </Radio.Button>
-        <Radio.Button key="ja" value={'ja'}>
+        <Radio.Button key="ja" value="ja">
           Japanese
         </Radio.Button>
       </Radio.Group>
+      <Form
+        form={form}
+        labelCol={{ span: 8 }}
+        wrapperCol={{ span: 16 }}
+        initialValues={{ remember: true }}
+        autoComplete="off"
+      >
+        <Form.Item
+          label="Username"
+          name="username"
+          rules={[{ required: true, message: `${t('homepage.title')}` }]}
+        >
+          <Input />
+        </Form.Item>
+      </Form>
       <div>
         <Pagination defaultCurrent={1} total={50} showSizeChanger />
       </div>

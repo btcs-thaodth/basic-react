@@ -1,11 +1,16 @@
-import { useRoutes, RouteObject } from 'react-router-dom'
+import { RouteObject, useRoutes } from 'react-router-dom'
+
 import Login from '../../pages/login'
 import ProtectedLayout from '../Layouts/ProtectedLayout'
 import RedirectHomeLayout from '../Layouts/RedirectHomeLayout'
-import { NotFoundPage } from '../NotFound'
+import NotFound from '../NotFound'
 
-const Task = () => <div>Task</div>
-const Test = () => <div>Test</div>
+function Task() {
+  return <div>Task</div>
+}
+function Test() {
+  return <div>Test</div>
+}
 
 export const routesConfig: RouteObject[] = [
   {
@@ -31,7 +36,7 @@ export const routesConfig: RouteObject[] = [
   },
   {
     path: '*',
-    element: <NotFoundPage />,
+    element: <NotFound />,
   },
 ]
 

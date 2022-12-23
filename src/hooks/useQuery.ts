@@ -1,10 +1,11 @@
-import { useEffect, useState } from 'react'
 import { isAxiosError } from 'axios'
+import { useEffect, useState } from 'react'
 import { useSetRecoilState } from 'recoil'
-import { ApiError, ErrorCode, UseQueryOptions } from '../types/hook'
-import { notificationState } from '../store/notification'
+
 import { API_ERROR_CODES } from '../constants/apiErrorCodes'
 import api from '../services/api'
+import { notificationState } from '../store/notification'
+import { ApiError, ErrorCode, UseQueryOptions } from '../types/hook'
 
 function useQuery<T>(url: string, options?: UseQueryOptions) {
   const [data, setData] = useState<T>()
@@ -20,26 +21,25 @@ function useQuery<T>(url: string, options?: UseQueryOptions) {
   const refetch = () => setIsRefetch((prev) => !prev)
 
   useEffect(() => {
-    if (!url) return
+    if (!url) return undefined
 
     let cancelRequest = false
 
     const fetchData = async () => {
       setIsLoading(true)
       try {
-        const data = await api.get<T>(url, options?.params)
+        const response = await api.get<T>(url, options?.params)
         if (cancelRequest) return
-        setData(data)
+        setData(response)
         setIsLoading(false)
         setIsFetched(true)
-      } catch (error) {
-        if (!isAxiosError<ApiError>(error)) {
-          console.log('Unexpected error: ', error)
+      } catch (err) {
+        if (!isAxiosError<ApiError>(err)) {
           setToastMessage({ error: 'error.default' })
           return
         }
 
-        const errorCode = error.response?.data?.error?.errorCode
+        const errorCode = err.response?.data?.error?.errorCode
         const errorMessage =
           errorCode && API_ERROR_CODES[errorCode as ErrorCode]
             ? API_ERROR_CODES[errorCode as ErrorCode]
